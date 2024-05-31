@@ -1,2 +1,4 @@
 class User:
-    pass
+    def __init__(self, username, scores):
+        self.username = username
+        self.scores = scores
