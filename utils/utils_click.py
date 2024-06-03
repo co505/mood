@@ -13,7 +13,6 @@ scattered and separately called in the main function.
 
 """
 
-
 console = Console()
 
 
@@ -22,30 +21,35 @@ def cli():
     pass
 
 
-@click.command()
-@click.option("--name", prompt="Enter your name")
-def create_user(name):
-    console.print(f"[bold cyan]{name}[/bold cyan] has been created.[bold cyan] Welcome :)[/bold cyan]", style="bold red")
-    # Save user to the file.
+@cli.command(help="Change your username.")
+@click.option("--username", prompt="Enter your name", help="The username to create")
+def create_user(username):
+    console.print(f"[bold cyan]{username}[/bold cyan] has been created. [bold cyan]Welcome :)[/bold cyan]",
+                  style="bold red")
+    # Save user to the file
 
 
-@click.command()
-@click.option("--score", prompt="How do you feel on a scale of one to five?", type=int)
+@cli.command(help="Input a score.")
+@click.option("--score", prompt="How do you feel on a scale of one to five?", type=int, help="Your score from 1 to 5")
 def obtain_score(score):
     if score >= 5:
-        console.print("[red] damn u bad [/red]")
+        console.print("[red]Damn, you feel great![/red]")
+    else:
+        console.print("[green]Keep going, you're doing well![/green]")
 
 
 @click.command()
-@click.option("--welcome", prompt="Welcome Setup", type=str)
-def welcome_setup(welcome):
-    console.print(f"[green] Welcome, it's  [/green]")
-    user_input = click.prompt("Enter your username: ")
-    create_user(user_input)
-    obtain_score()
+@click.argument('content', required=False)
+@click.option('--to_stdout', default=False)
+@click.pass_context
+def welcome_setup():
+    username = click.prompt("Enter your username")
+    create_user.invoke(
+        create_user(username)
+    )
+    score = click.prompt("How do you feel on a scale of one to five?", type=int)
+    obtain_score.invoke(obtain_score(score))
 
 
 if __name__ == "__main__":
-    obtain_score()
-    welcome_setup()
-    create_user()
+    cli()
