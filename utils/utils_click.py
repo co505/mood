@@ -1,4 +1,5 @@
 import click
+import utils_json as json_file
 from rich.console import Console
 
 """
@@ -24,10 +25,11 @@ def cli():
 @cli.command(help="Change your username.")
 @click.option("--username", prompt="Enter your name", help="The username to create")
 def create_user(username):
+    json_file.create_mood_data(username, f"{username}_mood.json")
     console.print(f"[bold cyan]{username}[/bold cyan] has been created. [bold cyan]Welcome :)[/bold cyan]",
                   style="bold red")
-    # Save user to the file
-
+    # Each user should have a specific file for them, rather than one nested variable.
+    # Usernames being input into the to get around the issue of two parameters being required for the method.
 
 @cli.command(help="Input a score.")
 @click.option("--score", prompt="How do you feel on a scale of one to five?", type=int, help="Your score from 1 to 5")
@@ -39,8 +41,8 @@ def obtain_score(score):
 
 
 @click.command()
-@click.argument('content', required=False)
-@click.option('--to_stdout', default=False)
+@click.argument('welcome', required=False)
+@click.option('--welcome', default=False)
 @click.pass_context
 def welcome_setup():
     username = click.prompt("Enter your username")

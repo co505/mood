@@ -1,14 +1,22 @@
 import json
 from cryptography.fernet import Fernet
 
-key = Fernet.generate_key()
-cipher_suite = Fernet(key)
+# key = Fernet.generate_key()
+# cipher_suite = Fernet(key)
 
-with open('mood_data.json', 'w') as jsonfile:
-    json.dump(mood_data, jsonfile)
 
-#How big should the file be?
-# Will I only need two columns?
+def create_mood_data(mood_data, file_path):
+    with open(file_path, 'x') as jsonfile:
+        json.dump(mood_data, jsonfile)
 
-# Set file permissions to read/write for the owner only
-os.chmod('user_data.json', 0o600)
+
+def write_mood_data(mood_data, file_path):
+    with open(file_path, 'w') as jsonfile:
+        json.dump(mood_data, jsonfile)
+
+
+def retrieve_mood_data(file_path):
+    with open(file_path, 'r') as jsonfile:
+        mood_data = json.load(jsonfile)
+        return mood_data
+
