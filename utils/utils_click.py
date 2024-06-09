@@ -1,10 +1,11 @@
 import click
-import utils_json as json_file
+import utils.utils_json as json_file
 from rich.console import Console
 import os
-from mood.usr import logged_in_user
+from usr_info import user
 
 console = Console()
+logged_in_user = user.logged_in_user
 
 
 @click.group()
@@ -46,5 +47,4 @@ name, do you wish to change it?
 
 """
 
-if __name__ == "__main__":
-    cli()
+

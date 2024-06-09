@@ -20,7 +20,7 @@ def create_mood_data(mood_data, file_path):
 
 def write_mood_data(score, file_path):
     mood_data = {"score": score}
-    with open(file_path, 'w') as jsonfile:
+    with open(file_path, 'a+') as jsonfile:
         json.dump(mood_data, jsonfile)
 
 
@@ -29,6 +29,3 @@ def retrieve_mood_data(file_path):
         mood_data = json.load(jsonfile)
         return mood_data
 
-
-if __name__ == '__main__':
-    print(os.getlogin())
