@@ -1,83 +1,50 @@
 import click
 import utils_json as json_file
 from rich.console import Console
-
-"""
-
-It's probably best to have a group here to create the welcome stage.
-With the welcome stage, we can populate the data structure, then push
-that to a JSON file.
-
-Furthermore, each creation function is only deployed once, therefore we 
-may as well encalpuate it into one big group, rather then have them
-scattered and separately called in the main function.
-
-
-"""
+import os
+from mood.usr import logged_in_user
 
 console = Console()
 
 
 @click.group()
-def setup():
+def cli():
     pass
 
 
-@setup.command(name='c', help="Change your username.")
+@cli.command(name='c', help="Create a file using the current logged in username.")
 def create_user():
-    username = click.prompt("Enter your name", type=str)
-    json_file.create_mood_data(username, f"{username}_mood.json")
-    console.print(f"[bold cyan]{username}[/bold cyan] has been created. [bold cyan]Welcome :)[/bold cyan]",
-                  style="bold red")
-    # Each user should have a specific file for them, rather than one nested variable.
-    # Usernames being input into the to get around the issue of two parameters being required for the method.
+    try:
+        json_file.create_mood_data(logged_in_user, f"{logged_in_user}_mood.json")
+        console.print(f"[bold cyan]{logged_in_user}[/bold cyan] has been created. [bold cyan]Welcome :)[/bold cyan]", style="bold red")
+    except FileExistsError:
+        console.print(f"Oops, a file already exists for [bold cyan]{logged_in_user}[/bold cyan].")
 
 
-@setup.command(name='s', help="Input a score.")
+@cli.command(name='s', help="Input a score.")
 def obtain_score():
-    score = click.prompt("how do you feel?", type=int)
+    score = click.prompt("How do you feel?", type=int)
     if score >= 5:
         console.print("[red]Damn, you feel great![/red]")
     else:
         console.print("[green]Keep going, you're doing well![/green]")
+    json_file.write_mood_data(score, f"{logged_in_user}_mood.json")
 
-# cli.add_command(obtain_score)
-# cli.add_command(create_user)
-
-
-# @cli.command(name='w', help='welcome page')
-# @click.argument('username')
-# @click.argument('score')
-# def welcome_setup(username, score):
-#     click.echo("Welcome page")
-#     click.echo("Enter username:")
-
-
-
-    """json_file.create_mood_data(username, f"{username}_mood.json")
-    click.echo(f"Welcome to mood! {welcome}")
-    create_user(username)
-    obtain_score(score)"""
-
-
-# @cli.command(name='w', help='welcome page')
-# @click.option('--welcome', default=False)
-# def welcome_setup(welcome):
-#     click.echo(welcome)
-#     username = input("enter user")
-#     create_user(username)
-#     score = input("enter score")
-#     obtain_score(score)
 
 """
-Multiple issues :
 
-1) Welcome function does not work
-2) When grouped, the options don't show as options
-3) When only one function is called, it only lists that particular function as an option
+We don't execute the check for a first time user here, we do it in the utils_json.py file. From there, we can check 
+from a file-level (?) if the user exists, if not, "Welcome! :) Function should be stored inside main for now, 
+just to speed development up slightly.
+
+Why don't we just store the file upon first boot? using the os.getlogin method? We could avoid a "what's your name?"
+function to create the user and automatically set the file structure up using the name stored through the login. 
+The welcome message could just introduce the user to the program through echo statements, rather then ask them arbitrary 
+questions. Security issue though? Maybe transparency is key, e.g."A file has been created for you in your logged-in
+name, do you wish to change it?  
+
 
 """
 
 if __name__ == "__main__":
-    setup_commands = ['c', 's']
-    setup(args=setup_commands, prog_name='setup')
+    cli()
