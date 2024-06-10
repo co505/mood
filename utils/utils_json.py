@@ -14,14 +14,20 @@ console = Console()
 
 
 def create_mood_data(mood_data, file_path):
-    with open(file_path, 'x') as jsonfile:
-        json.dump(mood_data, jsonfile)
+    try:
+        with open(file_path, 'x') as jsonfile:
+            json.dump(mood_data, jsonfile)
+    except FileExistsError:
+        return False
 
 
 def write_mood_data(score, file_path):
     mood_data = {"score": score}
-    with open(file_path, 'a+') as jsonfile:
-        json.dump(mood_data, jsonfile)
+    try:
+        with open(file_path, 'a+') as jsonfile:
+            json.dump(mood_data, jsonfile)
+    except Exception:
+        print("shit")
 
 
 def retrieve_mood_data(file_path):

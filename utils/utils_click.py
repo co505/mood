@@ -15,10 +15,9 @@ def cli():
 
 @cli.command(name='c', help="Create a file using the current logged in username.")
 def create_user():
-    try:
-        json_file.create_mood_data(logged_in_user, f"{logged_in_user}_mood.json")
+    if json_file.create_mood_data(logged_in_user, "./"):
         console.print(f"[bold cyan]{logged_in_user}[/bold cyan] has been created. [bold cyan]Welcome :)[/bold cyan]", style="bold red")
-    except FileExistsError:
+    else:
         console.print(f"Oops, a file already exists for [bold cyan]{logged_in_user}[/bold cyan].")
 
 
