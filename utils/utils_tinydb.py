@@ -17,9 +17,8 @@ def initialize_db():
         db = TinyDB(f"{logged_in_user}_mood.json")
         mood_table = db.table('mood')
         mood_table.insert({'File Created': dt_now})
-    else:
-        db = TinyDB(f"{logged_in_user}_mood.json")
-        mood_table = db.table('mood')
+        return True
+
 
 
 def write_mood_date(score):

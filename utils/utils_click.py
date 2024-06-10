@@ -15,7 +15,7 @@ def cli():
 
 @cli.command(name='c', help="Create a file using the current logged in username.")
 def create_user():
-    if not td.initialize_db():
+    if td.initialize_db():
         console.print(f"A file for [bold cyan]{logged_in_user}[/bold cyan] has been created. [bold cyan]Welcome :)[/bold cyan]", style="bold red")
     else:
         console.print(f"Oops, a file already exists for [bold cyan]{logged_in_user}[/bold cyan].")
