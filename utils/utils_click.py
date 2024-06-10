@@ -2,7 +2,7 @@ import click
 import utils.utils_json as json_file
 from rich.console import Console
 from usr_info.user import logged_in_user
-import utils.tiny_database as td
+import utils.utils_tinydb as td
 import datetime
 
 console = Console()
@@ -15,8 +15,8 @@ def cli():
 
 @cli.command(name='c', help="Create a file using the current logged in username.")
 def create_user():
-    if json_file.create_mood_data(logged_in_user, "./"):
-        console.print(f"[bold cyan]{logged_in_user}[/bold cyan] has been created. [bold cyan]Welcome :)[/bold cyan]", style="bold red")
+    if not td.initialize_db():
+        console.print(f"A file for [bold cyan]{logged_in_user}[/bold cyan] has been created. [bold cyan]Welcome :)[/bold cyan]", style="bold red")
     else:
         console.print(f"Oops, a file already exists for [bold cyan]{logged_in_user}[/bold cyan].")
 
