@@ -1,12 +1,6 @@
 import json
-import os
 from rich.console import Console
 
-from cryptography.fernet import Fernet
-
-
-# key = Fernet.generate_key()
-# cipher_suite = Fernet(key)
 
 console = Console()
 

@@ -1,11 +1,11 @@
 import click
 import utils.utils_json as json_file
 from rich.console import Console
-import os
-from usr_info import user
+from usr_info.user import logged_in_user
+import utils.tiny_database as td
+import datetime
 
 console = Console()
-logged_in_user = user.logged_in_user
 
 
 @click.group()
@@ -24,11 +24,12 @@ def create_user():
 @cli.command(name='s', help="Input a score.")
 def obtain_score():
     score = click.prompt("How do you feel?", type=int)
+    dt_now = str(datetime.datetime.now())
     if score >= 5:
         console.print("[red]Damn, you feel great![/red]")
     else:
         console.print("[green]Keep going, you're doing well![/green]")
-    json_file.write_mood_data(score, f"{logged_in_user}_mood.json")
+    td.write_mood_date(dt_now, score)
 
 
 """
