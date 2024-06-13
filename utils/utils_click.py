@@ -1,7 +1,7 @@
 import click
 from rich.console import Console
-from usr_info.user import logged_in_user
-import utils.utils_tinydb as td
+import usr_info
+import utils
 import datetime
 import os
 
@@ -25,16 +25,16 @@ def obtain_score():
         console.print("[red]Damn, you feel great![/red]")
     else:
         console.print("[green]Keep going, you're doing well![/green]")
-    td.write_mood_data(dt_now, score)
+    utils.write_mood_data(dt_now, score)
 
 
 @cli.command(name='d', help="Delete User File.")
 def delete_user():
     user_input = click.prompt('Are you sure you want to delete this user?', type=click.Choice(['y', 'n']))
     if user_input == 'y':
-        td.delete_mood_data()
-        os.remove(f"{logged_in_user}.txt") # Deleting the first-time startup check so user can start from scratch.
-        console.print(f"[red]Deleted file for {logged_in_user}[/red]")
+        utils.delete_mood_data()
+        os.remove(f"{usr_info.logged_in_user}.txt") # Deleting the first-time startup check so user can start from scratch.
+        console.print(f"[red]Deleted file for {usr_info.logged_in_user}[/red]")
 
 
 
