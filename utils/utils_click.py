@@ -25,7 +25,7 @@ def obtain_score():
         console.print("[red]Damn, you feel great![/red]")
     else:
         console.print("[green]Keep going, you're doing well![/green]")
-    utils.write_mood_data(dt_now, score)
+    return score
 
 
 @cli.command(name='d', help="Delete User File.")
