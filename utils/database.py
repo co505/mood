@@ -1,11 +1,14 @@
 from tinydb import TinyDB, Query
 import datetime
 import os
-import usr_info
 
 
 def initialize_db(db_path):
     return TinyDB(db_path)
+
+
+def first_db_setup(db, name, datetime, score):
+    return db.insert({'Name': name, 'Datetime': datetime, 'Score': score})
 
 
 def get_datetime():

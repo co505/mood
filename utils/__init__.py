@@ -1,2 +1,4 @@
-from utils.utils_tinydb import write_mood_data
-from utils.utils_tinydb import delete_mood_data
+import utils.database as database
+import utils.cli_interaction as cli_interaction
+from utils.cli_interaction import cli, welcome
+
