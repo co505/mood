@@ -1,2 +1,1 @@
-from usr.user import User
-
+import usr.user as user_class
