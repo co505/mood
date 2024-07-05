@@ -1,5 +1,6 @@
 from utils.cli_interaction import cli, welcome
 import os
+from usr.user import User
 
 if __name__ == "__main__":
     # A new file is created to track when the user first starts the application.
@@ -11,3 +12,4 @@ if __name__ == "__main__":
         welcome()
     else:
         cli()
+
