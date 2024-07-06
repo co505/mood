@@ -5,6 +5,8 @@ from usr.user import User
 
 JSON_FILE = f"{os.getlogin()}_mood.json"
 
+# Functional approach here due to data interaction.
+
 
 def initialize_db():
     return TinyDB(JSON_FILE)
@@ -32,5 +34,12 @@ def delete_mood_data():
 def write_mood_data(score) -> None:
     mood_table = TinyDB(JSON_FILE).table('mood')
     mood_table.insert({'datetime': get_datetime(), 'score': score})
+
+
+def list_all_scores():
+    result = []
+    for item in TinyDB(JSON_FILE).table('mood'):
+        result.append(item)
+    return result
 
 

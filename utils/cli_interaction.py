@@ -37,7 +37,12 @@ def obtain_score():
     database.write_mood_data(score=score)
 
 
-@cli.command(name='d', help="Delete User File.")
+@cli.command(name='ds', help="Delete a score")
+def delete_user_score(): # List all scores with indexes and allow user to select specific from list.
+    console.print(f"[red]{database.list_all_scores()}[/red]")
+
+
+@cli.command(name='dd', help="Delete User File.")
 def delete_user():
     user_input = click.prompt('Are you sure you want to delete this user?', type=click.Choice(['y', 'n']))
     if user_input == 'y':

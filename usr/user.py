@@ -15,14 +15,3 @@ class User:
     @classmethod
     def set_current_user(cls, x):
         cls.current_user = x
-
-
-
-"""
-
-    Static Variable, which will be set modified using a setter. 
-    Static variable will contain the 'login' information for a particular user.
-    Right now, we don't care for a password. 
-    Getter will access the static variable
-     
-"""
